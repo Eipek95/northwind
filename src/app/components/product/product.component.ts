@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -10,16 +11,38 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductComponent implements OnInit {
   products: Product[] = [];
   dataLoaded = false;
-  constructor(private productService: ProductService) {}
-
+  constructor(
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute
+  ) {}
+//program çalıştığı an
   ngOnInit(): void {
-    this.getProduct();
+    //linkte parametre varsa parametreli olanı getir yoksa bütün ürünleri getir
+    this.activatedRoute.params.subscribe((params) => {
+      //params dictionary gibi çalışır.categoryId karşılık gelen neyse onu verir
+      if (params['categoryId']) {
+        this.getProductsByCategory(params["categoryId"])
+      }
+      else{
+        this.getProduct()
+      }
+    });
   }
 
+  //Observable olduğu için subscribe kullanılır
   getProduct() {
     this.productService.getProducts().subscribe((response) => {
       this.products = response.data;
-      this.dataLoaded=true
+      this.dataLoaded = true;
     });
+  }
+
+  getProductsByCategory(categoryId: number) {
+    this.productService
+      .getProductsByCategory(categoryId)
+      .subscribe((response) => {
+        this.products = response.data;
+        this.dataLoaded = true;
+      });
   }
 }
