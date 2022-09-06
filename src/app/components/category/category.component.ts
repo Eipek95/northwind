@@ -9,7 +9,7 @@ import { CategoryService } from 'src/app/services/category.service';
 })
 export class CategoryComponent implements OnInit {
   categories: Category[] = [];
-  currentCategory: Category; //tsconfig--->add "strictPropertyInitialization": false.category nesnesimden gelen verileri tutar
+  currentCategory?: Category; //tsconfig--->add "strictPropertyInitialization": false.category nesnesimden gelen verileri tutar
   constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
@@ -21,28 +21,27 @@ export class CategoryComponent implements OnInit {
       this.categories = response.data;
     });
   }
-  setCurrentCategory(category: Category) {//tıkladığımız nesne hakkında bilgi getirecektir
+  setCurrentCategory(category: Category) {
+    //tıkladığımız nesne hakkında bilgi getirecektir
     this.currentCategory = category;
   }
-  clearCurrentCategory() {
-
-    //burayı doldur
+  clearCurrentCategory() { 
+    delete this.currentCategory; 
   }
-  getCurrentCategoryClass(category: Category) {//seçili category css aktif eder.
+  getCurrentCategoryClass(category: Category) {
+    //seçili category css aktif eder.
     if (category == this.currentCategory) {
-      return "list-group-item active"
-    }
-    else{
-      return "list-group-item"
+      return 'list-group-item active';
+    } else {
+      return 'list-group-item';
     }
   }
 
-  getAllCategoryClass(){
-    if(!this.currentCategory){
-      return "list-group-item active"
-    }
-    else{
-      return "list-group-item"
+  getAllCategoryClass() {
+    if (!this.currentCategory) {
+      return 'list-group-item active';
+    } else {
+      return 'list-group-item';
     }
   }
 }
