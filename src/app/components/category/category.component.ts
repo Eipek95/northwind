@@ -27,6 +27,7 @@ export class CategoryComponent implements OnInit {
   }
   clearCurrentCategory() { 
     delete this.currentCategory; 
+    console.log("işlem çalıştı");
   }
   getCurrentCategoryClass(category: Category) {
     //seçili category css aktif eder.
