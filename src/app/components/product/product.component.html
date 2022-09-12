@@ -30,6 +30,7 @@
       <th scope="col">Fiyat</th>
       <th scope="col">Kdv'li Fiyat</th>
       <th scope="col">Stok Adedi</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -41,6 +42,7 @@
       <td>{{ product.unitPrice | vatAdded: 18 | currency }}</td>
       <!--vatadded kendi içindeki transform methodunu çalıştırır.curreny para birimi default dolar. transform(up,10,curency,..)-->
       <td>{{ product.unitsInStock }}</td>
+      <td><button (click)="addToCart(product)" class="btn btn-success">Sepete Ekle</button></td>
     </tr>
   </tbody>
 </table>
