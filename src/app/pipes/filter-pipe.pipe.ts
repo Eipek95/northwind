@@ -11,7 +11,7 @@ export class FilterPipePipe implements PipeTransform {
     return filterText
     ?
     value.filter((p:Product)=>p.productName.toLocaleLowerCase().indexOf(filterText)!==-1)//filtrede aranan kelime varsa listeye dönüştür deöndür değeri
-    :value;//filtreli değer yoksa bütün listeyi olduğu gibi ver
+    :value;//filtreli değer yoksa boş liste dönder
   }
 
 }
