@@ -28,8 +28,8 @@ export class CategoryComponent implements OnInit {
   clearCurrentCategory() { 
     delete this.currentCategory; 
   }
-  getCurrentCategoryClass(category: Category) {
-    //seçili category css aktif eder.
+  getCurrentCategoryClass(category: Category) {//seçili category css aktif eder.  
+    
     if (category == this.currentCategory) {
       return 'list-group-item active';
     } else {

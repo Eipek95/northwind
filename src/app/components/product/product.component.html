@@ -1,24 +1,45 @@
-<div *ngIf="dataLoaded==false" class="spinner-border text-primary" role="status">
+<div
+  *ngIf="dataLoaded == false"
+  class="spinner-border text-primary"
+  role="status"
+>
   <span class="visually-hidden">Loading...</span>
 </div>
+<!--ngModel bindi kullabilmek için app.module içinde import { FormsModule } from '@angular/forms'; edilmesi gerek-->
+<div class="mb-3" *ngIf="dataLoaded == true">
+  <label for="filterText" class="form-label">Ürün Ara</label>
+  <input
+    type="text"
+    [(ngModel)]="filterText"
+    class="form-control"
+    id="filterText"
+    placeholder="arama ifadesini giriniz"
+  />
+</div>
+<!---ngif içine filterText.length>2 gibi koşullar yazılabilir-->
+<div *ngIf="filterText" class="alert alert-success">
+  {{filterText}} aradınız
+</div>
 
-
-<table *ngIf="dataLoaded==true" class="table table-striped">
+<table *ngIf="dataLoaded == true" class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Category</th>
-      <th scope="col">Unit Price</th>
-      <th scope="col">Units In Stock</th>
+      <th scope="col">Ürün Adı</th>
+      <th scope="col">Kategori</th>
+      <th scope="col">Fiyat</th>
+      <th scope="col">Kdv'li Fiyat</th>
+      <th scope="col">Stok Adedi</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products">
+    <tr *ngFor="let product of products | filterPipe:filterText">
       <td>{{ product.productId }}</td>
-      <td>{{ product.productName }}</td>
+      <td>{{ product.productName | uppercase }}</td>
       <td>{{ product.categoryId }}</td>
-      <td>{{ product.unitPrice }}</td>
+      <td>{{ product.unitPrice | currency }}</td>
+      <td>{{ product.unitPrice | vatAdded: 18 | currency }}</td>
+      <!--vatadded kendi içindeki transform methodunu çalıştırır.curreny para birimi default dolar. transform(up,10,curency,..)-->
       <td>{{ product.unitsInStock }}</td>
     </tr>
   </tbody>
